@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+	compileSdkVersion compileAndTargetSdkVersion
+	buildToolsVersion '28.0.3'
+
+	defaultConfig {
+		applicationId "com.eutigo.wastickerapps"
+		minSdkVersion 21
+		targetSdkVersion compileAndTargetSdkVersion
+		versionCode 1
+		versionName "1.0"
+		resConfigs('en', 'xxxhdpi')
+		ndk {
+			abiFilters "x86", "x86_64", "arm64-v8a", "armeabi-v7a"
+		}
+	}
+
+	buildTypes {
+		release {
+			minifyEnabled true
+			shrinkResources true
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+		debug {
+			splits.abi.enable = false
+			splits.density.enable = false
+			aaptOptions.cruncherEnabled = false
+		}
+	}
+
+	dexOptions {
+		preDexLibraries true
+		maxProcessCount 8
+	}
+}
+
+dependencies {
+	implementation("com.android.support:appcompat-v7:$supportLibraryVersion") {
+		force = true
+	}
+	implementation 'com.google.firebase:firebase-core:16.0.3'
+	implementation 'com.google.firebase:firebase-messaging:17.3.2'
+	implementation 'com.google.firebase:firebase-database:16.0.1'
+}
+
+apply plugin: 'com.google.gms.google-services'
